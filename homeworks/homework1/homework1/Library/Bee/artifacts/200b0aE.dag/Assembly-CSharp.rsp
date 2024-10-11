@@ -344,6 +344,7 @@
 -r:"Library/Bee/artifacts/200b0aE.dag/UnityEngine.UI.ref.dll"
 "Assets/ConstantForce.cs"
 "Assets/MoveableObjectController.cs"
+"Assets/ObjectSpawner.cs"
 -langversion:9.0
 
 /deterministic
