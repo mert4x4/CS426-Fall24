@@ -342,9 +342,12 @@
 -r:"Library/Bee/artifacts/200b0aE.dag/Unity.VSCode.Editor.ref.dll"
 -r:"Library/Bee/artifacts/200b0aE.dag/UnityEditor.UI.ref.dll"
 -r:"Library/Bee/artifacts/200b0aE.dag/UnityEngine.UI.ref.dll"
-"Assets/ConstantForce.cs"
-"Assets/MoveableObjectController.cs"
-"Assets/ObjectSpawner.cs"
+"Assets/CameraFollow.cs"
+"Assets/scripts/ConstantForce.cs"
+"Assets/scripts/CubeScaler.cs"
+"Assets/scripts/MoveableObjectController.cs"
+"Assets/scripts/MusicController.cs"
+"Assets/scripts/ObjectSpawner.cs"
 -langversion:9.0
 
 /deterministic
