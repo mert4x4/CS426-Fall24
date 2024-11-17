@@ -15,8 +15,8 @@ public class PlatformSpawner : MonoBehaviour
 
     private Vector3[] spawnPatterns = 
     {
-        new Vector3(-4f, 0f, 0f), new Vector3(0f, 0f, 0f), new Vector3(4f, 0f, 0f),
-        new Vector3(-3f, 1f, 0f), new Vector3(3f, 1f, 0f), new Vector3(0f, 2f, 0f)
+        new Vector3(-6f, 0f, 0f), new Vector3(0f, 0f, 0f), new Vector3(4f, 0f, 0f),
+        new Vector3(-5f, 1f, 0f), new Vector3(6f, 1f, 0f), new Vector3(0f, 2f, 0f)
     };
 
     void Start()
@@ -74,7 +74,11 @@ public class PlatformSpawner : MonoBehaviour
         while (activePlatforms.Count > 0 && activePlatforms.Peek().transform.position.z + platformLength < playerTransform.position.z)
         {
             GameObject oldPlatform = activePlatforms.Dequeue();
-            Destroy(oldPlatform);
+            if (oldPlatform != null)
+            {
+                Debug.Log($"Removing platform: {oldPlatform.name} at position {oldPlatform.transform.position}");
+                Destroy(oldPlatform);
+            }
         }
     }
 }

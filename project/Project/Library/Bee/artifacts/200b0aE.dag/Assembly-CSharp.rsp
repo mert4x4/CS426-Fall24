@@ -344,6 +344,7 @@
 -r:"Library/Bee/artifacts/200b0aE.dag/UnityEngine.UI.ref.dll"
 "Assets/CameraController.cs"
 "Assets/Coin.cs"
+"Assets/PlatformBehavior.cs"
 "Assets/PlatformSpawner.cs"
 "Assets/PlayerMovement.cs"
 -langversion:9.0
