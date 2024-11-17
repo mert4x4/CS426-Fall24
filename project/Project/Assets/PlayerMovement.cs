@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class PlayerMovement : MonoBehaviour
     private bool isGrounded;
     private int jumpCount = 0;
     private bool isDashing = false;
+
+    private GameObject currentPlatform;  // Track the current platform the player is on
 
     void Start()
     {
@@ -57,10 +60,12 @@ public class PlayerMovement : MonoBehaviour
         {
             isGrounded = true;
             jumpCount = 0; // Reset jump count when on the ground
+            currentPlatform = collision.gameObject;  // Store the current platform
         }
     }
 
-    private System.Collections.IEnumerator Dash()
+
+    private IEnumerator Dash()
     {
         isDashing = true;
         Vector3 dashDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")).normalized;
