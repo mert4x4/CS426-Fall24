@@ -4,6 +4,7 @@ using System.Collections.Generic;
 public class PlatformSpawner : MonoBehaviour
 {
     public GameObject platformPrefab;  // Prefab for the platform
+    public GameObject coinPrefab;      // Prefab for the coin
     public int initialPlatformCount = 5;  // Number of platforms to spawn initially
     public float platformLength = 10f;  // Length of each platform
     public Transform playerTransform;  // Reference to the player's transform
@@ -11,6 +12,12 @@ public class PlatformSpawner : MonoBehaviour
 
     private Queue<GameObject> activePlatforms = new Queue<GameObject>();  // Platforms in use
     private float nextSpawnZ = 0f;  // Z-coordinate for the next platform spawn
+
+    private Vector3[] spawnPatterns = 
+    {
+        new Vector3(-4f, 0f, 0f), new Vector3(0f, 0f, 0f), new Vector3(4f, 0f, 0f),
+        new Vector3(-3f, 1f, 0f), new Vector3(3f, 1f, 0f), new Vector3(0f, 2f, 0f)
+    };
 
     void Start()
     {
@@ -28,9 +35,6 @@ public class PlatformSpawner : MonoBehaviour
             }
         }
 
-        Debug.Log("PlatformSpawner initialized.");
-
-        // Spawn initial platforms
         for (int i = 0; i < initialPlatformCount; i++)
         {
             SpawnPlatform();
@@ -39,12 +43,8 @@ public class PlatformSpawner : MonoBehaviour
 
     void Update()
     {
-        Debug.Log($"Player Z: {playerTransform.position.z}, Next Spawn Threshold: {nextSpawnZ - spawnDistanceAhead}");
-
-        // Spawn new platforms as the player moves forward
-        if (playerTransform.position.z + spawnDistanceAhead > nextSpawnZ)
+        while (playerTransform.position.z + spawnDistanceAhead > nextSpawnZ)
         {
-            Debug.Log($"Spawning new platform at Z: {nextSpawnZ}");
             SpawnPlatform();
             RemovePreviousPlatforms();
         }
@@ -52,11 +52,21 @@ public class PlatformSpawner : MonoBehaviour
 
     void SpawnPlatform()
     {
-        GameObject platform = Instantiate(platformPrefab, new Vector3(0, 0, nextSpawnZ), Quaternion.identity);
-        activePlatforms.Enqueue(platform);  // Add platform to queue
-        nextSpawnZ += platformLength;  // Update the next spawn Z position
+        Vector3 randomOffset = spawnPatterns[Random.Range(0, spawnPatterns.Length)];
+        GameObject platform = Instantiate(platformPrefab, new Vector3(randomOffset.x, randomOffset.y, nextSpawnZ), Quaternion.identity);
+        activePlatforms.Enqueue(platform);
 
-        Debug.Log($"Platform spawned at position: {platform.transform.position}");
+        // Spawn a coin between platforms
+        Vector3 coinPosition = new Vector3(randomOffset.x, randomOffset.y + 1f, nextSpawnZ - platformLength / 2);
+        SpawnCoin(coinPosition);
+
+        nextSpawnZ += platformLength;
+    }
+
+    void SpawnCoin(Vector3 position)
+    {
+        GameObject coin = Instantiate(coinPrefab, position, Quaternion.identity);
+        Debug.Log($"Coin spawned at position: {position}");
     }
 
     void RemovePreviousPlatforms()
@@ -64,29 +74,7 @@ public class PlatformSpawner : MonoBehaviour
         while (activePlatforms.Count > 0 && activePlatforms.Peek().transform.position.z + platformLength < playerTransform.position.z)
         {
             GameObject oldPlatform = activePlatforms.Dequeue();
-            Debug.Log($"Removing platform: {oldPlatform.name} at position {oldPlatform.transform.position}");
-            Destroy(oldPlatform);  // Destroy the platform
+            Destroy(oldPlatform);
         }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        Debug.Log($"TriggerExit detected on object: {other.gameObject.name}");
-
-        if (other.CompareTag("Player"))
-        {
-            Debug.Log("Player exited the trigger zone of a platform.");
-            RemovePreviousPlatforms();
-        }
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        Debug.Log($"Collision detected with: {collision.gameObject.name}");
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        Debug.Log($"TriggerEnter detected on object: {other.gameObject.name}");
     }
 }

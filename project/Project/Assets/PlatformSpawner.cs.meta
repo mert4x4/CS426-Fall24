@@ -4,8 +4,9 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - platformPrefab: {fileID: 3250403030977851548, guid: 10c1a52b61d494c62938d16d1e0b013e, type: 3}
-  - playerTransform: {fileID: 7800343347851674155, guid: 0153667501cad4be0bbce9fecc04b09e, type: 3}
+  - platformPrefab: {fileID: 4171064709730875458, guid: 8ffe88d641d6b4c839dd9be9677bf69b, type: 3}
+  - coinPrefab: {fileID: 3375920208914815235, guid: da3800c51c3534ab4aaed889f2cda922, type: 3}
+  - playerTransform: {fileID: 4763472777664604442, guid: c45daae09a5f148ad8225cfe142829c8, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
