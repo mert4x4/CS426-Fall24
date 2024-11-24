@@ -21,6 +21,9 @@ public class PlayerMovement : MonoBehaviour
     private Renderer playerRenderer;
     private Color originalColor;
 
+    // Particle system for the dash effect
+    public ParticleSystem dashParticles;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -30,6 +33,16 @@ public class PlayerMovement : MonoBehaviour
             originalColor = playerRenderer.material.color;
         }
         currentMaxJumps = maxJumps;
+
+        // Ensure the particle system is not active initially
+        if (dashParticles != null)
+        {
+            dashParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        }
+        else
+        {
+            Debug.LogError("Dash particle system is not assigned in the Inspector.");
+        }
     }
 
     void Update()
@@ -161,6 +174,13 @@ public class PlayerMovement : MonoBehaviour
     {
         isDashing = true;
 
+        // Activate the particle system
+        if (dashParticles != null)
+        {
+            dashParticles.Play();
+            Debug.Log("Dash particles activated.");
+        }
+
         // Change color to indicate dashing
         if (playerRenderer != null)
         {
@@ -186,13 +206,19 @@ public class PlayerMovement : MonoBehaviour
         rb.drag = originalDrag;
         rb.velocity = Vector3.zero;
 
-        yield return new WaitForSeconds(0.3f);
+        // Deactivate the particle system
+        if (dashParticles != null)
+        {
+            //dashParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            //Debug.Log("Dash particles deactivated.");
+        }
 
         // Reset color after dash
         if (playerRenderer != null)
         {
             playerRenderer.material.color = originalColor;
         }
+
         isDashing = false;
         Debug.Log("Dash ended.");
     }
