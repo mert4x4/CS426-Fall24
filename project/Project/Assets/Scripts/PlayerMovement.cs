@@ -21,8 +21,8 @@ public class PlayerMovement : MonoBehaviour
     private Renderer playerRenderer;
     private Color originalColor;
 
-    // Particle system for the dash effect
-    public ParticleSystem dashParticles;
+    // Particle system for the coin collection effect
+    public ParticleSystem coinCollectionParticles;
 
     void Start()
     {
@@ -35,13 +35,13 @@ public class PlayerMovement : MonoBehaviour
         currentMaxJumps = maxJumps;
 
         // Ensure the particle system is not active initially
-        if (dashParticles != null)
+        if (coinCollectionParticles != null)
         {
-            dashParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            coinCollectionParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
         }
         else
         {
-            Debug.LogError("Dash particle system is not assigned in the Inspector.");
+            Debug.LogError("Coin collection particle system is not assigned in the Inspector.");
         }
     }
 
@@ -138,24 +138,27 @@ public class PlayerMovement : MonoBehaviour
         if (other.CompareTag("Coin"))
         {
             Debug.Log("Coin detected.");
-
-            if (isDashing)
-            {
-                CollectCoin();
-            }
-            else
-            {
-                Debug.Log("Player touched coin, but was not dashing.");
-            }
-
+            CollectCoinWithParticles(other.transform.position);
             Destroy(other.gameObject);  // Destroy the coin after collection
         }
     }
 
-    private void CollectCoin()
+    private void CollectCoinWithParticles(Vector3 coinPosition)
     {
         currentMaxJumps++;
-        Debug.Log($"Coin collected while dashing! Extra jump granted. Current max jumps: {currentMaxJumps}");
+        Debug.Log($"Coin collected! Extra jump granted. Current max jumps: {currentMaxJumps}");
+
+        // Spawn the particle system at the coin's position
+        if (coinCollectionParticles != null)
+        {
+            coinCollectionParticles.transform.position = coinPosition; // Move the particle system to the coin's position
+            coinCollectionParticles.Play();  // Play the particle effect
+            Debug.Log("Coin collection particles activated.");
+        }
+        else
+        {
+            Debug.LogWarning("Coin collection particle system is not assigned.");
+        }
     }
 
     public void ResetMaxJumps()
@@ -173,13 +176,6 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator Dash()
     {
         isDashing = true;
-
-        // Activate the particle system
-        if (dashParticles != null)
-        {
-            dashParticles.Play();
-            Debug.Log("Dash particles activated.");
-        }
 
         // Change color to indicate dashing
         if (playerRenderer != null)
@@ -206,12 +202,8 @@ public class PlayerMovement : MonoBehaviour
         rb.drag = originalDrag;
         rb.velocity = Vector3.zero;
 
-        // Deactivate the particle system
-        if (dashParticles != null)
-        {
-            //dashParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-            //Debug.Log("Dash particles deactivated.");
-        }
+        // Extending the animation
+        yield return new WaitForSeconds(0.3f);
 
         // Reset color after dash
         if (playerRenderer != null)

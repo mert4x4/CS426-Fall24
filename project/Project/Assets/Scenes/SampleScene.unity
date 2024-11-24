@@ -5397,6 +5397,10 @@ PrefabInstance:
       propertyPath: dashParticles
       value: 
       objectReference: {fileID: 1349056850}
+    - target: {fileID: 4763472777664604445, guid: c45daae09a5f148ad8225cfe142829c8, type: 3}
+      propertyPath: coinCollectionParticles
+      value: 
+      objectReference: {fileID: 1349056850}
     - target: {fileID: 4763472777664604454, guid: c45daae09a5f148ad8225cfe142829c8, type: 3}
       propertyPath: m_Name
       value: Player
