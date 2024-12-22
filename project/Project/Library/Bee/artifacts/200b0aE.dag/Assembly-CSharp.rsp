@@ -342,12 +342,15 @@
 -r:"Library/Bee/artifacts/200b0aE.dag/Unity.VSCode.Editor.ref.dll"
 -r:"Library/Bee/artifacts/200b0aE.dag/UnityEditor.UI.ref.dll"
 -r:"Library/Bee/artifacts/200b0aE.dag/UnityEngine.UI.ref.dll"
+"Assets/Quirky Series - Birds Bundle/_Scripts/Demo.cs"
 "Assets/Scripts/CameraController.cs"
 "Assets/Scripts/Coin.cs"
 "Assets/Scripts/GameManager.cs"
+"Assets/Scripts/MainMenuManager.cs"
 "Assets/Scripts/PlatformBehavior.cs"
 "Assets/Scripts/PlatformSpawner.cs"
 "Assets/Scripts/PlayerMovement.cs"
+"Assets/Scripts/ScoreDisplay.cs"
 -langversion:9.0
 
 /deterministic

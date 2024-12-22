@@ -21,8 +21,37 @@ public class PlayerMovement : MonoBehaviour
     private Renderer playerRenderer;
     private Color originalColor;
 
-    // Particle system for the coin collection effect
-    public ParticleSystem coinCollectionParticles;
+    // Particle systems for coin collection effects
+    public ParticleSystem coinCollectionParticles;         // For collecting a coin while dashing
+    public ParticleSystem normalCoinCollectionParticles;   // For collecting a coin without dashing
+
+    // Scoring system
+    private int score = 0;       // Player's current score
+    private float scoreMultiplier = 1f;  // Score multiplier
+    
+    public int GetScore()
+{
+    return score;
+}
+
+public float GetMultiplier()
+{
+    return scoreMultiplier;
+}
+
+    public void SetScore(int newScore)
+{
+    score = newScore;
+    Debug.Log($"Score has been set to: {score}");
+}
+
+public void SetMultiplier(float newMultiplier)
+{
+    scoreMultiplier = newMultiplier;
+    Debug.Log($"Multiplier has been set to: {scoreMultiplier:F2}");
+}
+
+    
 
     void Start()
     {
@@ -34,14 +63,23 @@ public class PlayerMovement : MonoBehaviour
         }
         currentMaxJumps = maxJumps;
 
-        // Ensure the particle system is not active initially
+        // Ensure the particle systems are not active initially
         if (coinCollectionParticles != null)
         {
             coinCollectionParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
         }
         else
         {
-            Debug.LogError("Coin collection particle system is not assigned in the Inspector.");
+            Debug.LogError("Coin collection particle system for dashing is not assigned in the Inspector.");
+        }
+
+        if (normalCoinCollectionParticles != null)
+        {
+            normalCoinCollectionParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        }
+        else
+        {
+            Debug.LogError("Coin collection particle system for normal collection is not assigned in the Inspector.");
         }
     }
 
@@ -138,27 +176,65 @@ public class PlayerMovement : MonoBehaviour
         if (other.CompareTag("Coin"))
         {
             Debug.Log("Coin detected.");
-            CollectCoinWithParticles(other.transform.position);
+
+            if (isDashing)
+            {
+                CollectCoinWithDashParticles(other.transform.position);
+            }
+            else
+            {
+                CollectCoinWithNormalParticles(other.transform.position);
+            }
+
             Destroy(other.gameObject);  // Destroy the coin after collection
         }
     }
 
-    private void CollectCoinWithParticles(Vector3 coinPosition)
+    private void CollectCoinWithDashParticles(Vector3 coinPosition)
     {
         currentMaxJumps++;
-        Debug.Log($"Coin collected! Extra jump granted. Current max jumps: {currentMaxJumps}");
+        scoreMultiplier *= 1.25f;  // Increase multiplier
+        AddScore(1);  // Add base score
 
-        // Spawn the particle system at the coin's position
+        Debug.Log($"Coin collected while dashing! Extra jump granted. Current max jumps: {currentMaxJumps}, Score: {score}, Multiplier: {scoreMultiplier:F2}");
+
+        // Play the dash particle effect
         if (coinCollectionParticles != null)
         {
-            coinCollectionParticles.transform.position = coinPosition; // Move the particle system to the coin's position
-            coinCollectionParticles.Play();  // Play the particle effect
-            Debug.Log("Coin collection particles activated.");
+            coinCollectionParticles.transform.position = coinPosition;
+            coinCollectionParticles.Play();
+            Debug.Log("Dash coin collection particles activated.");
         }
         else
         {
-            Debug.LogWarning("Coin collection particle system is not assigned.");
+            Debug.LogWarning("Dash coin collection particle system is not assigned.");
         }
+    }
+
+    private void CollectCoinWithNormalParticles(Vector3 coinPosition)
+    {
+        scoreMultiplier = 1f;  // Reset multiplier
+        AddScore(1);  // Add base score
+
+        Debug.Log($"Coin collected normally! Score: {score}, Multiplier reset to {scoreMultiplier:F2}");
+
+        // Play the normal particle effect
+        if (normalCoinCollectionParticles != null)
+        {
+            normalCoinCollectionParticles.transform.position = coinPosition;
+            normalCoinCollectionParticles.Play();
+            Debug.Log("Normal coin collection particles activated.");
+        }
+        else
+        {
+            Debug.LogWarning("Normal coin collection particle system is not assigned.");
+        }
+    }
+
+    private void AddScore(int baseScore)
+    {
+        score += Mathf.RoundToInt(baseScore * scoreMultiplier);
+        Debug.Log($"Updated Score: {score}, Multiplier: {scoreMultiplier:F2}");
     }
 
     public void ResetMaxJumps()

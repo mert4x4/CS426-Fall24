@@ -121,41 +121,63 @@ public class PlatformSpawner : MonoBehaviour
         }
     }
 
-    public void ResetSpawner()
+public void ResetSpawner()
+{
+    // Destroy all active platforms and coins
+    while (activePlatforms.Count > 0)
     {
-        // Destroy all active platforms and coins
-        while (activePlatforms.Count > 0)
-        {
-            GameObject platform = activePlatforms.Dequeue();
-            Destroy(platform);
-        }
-
-        foreach (GameObject coin in activeCoins)
-        {
-            if (coin != null)
-            {
-                Destroy(coin);
-            }
-        }
-        activeCoins.Clear();
-
-        // Reset spawn position and state
-        nextSpawnZ = 0f;
-        isFirstSpawnSkipped = false;  // Reset the first spawn skip state
-
-        // Spawn initial platforms again
-        for (int i = 0; i < initialPlatformCount; i++)
-        {
-            if (!isFirstSpawnSkipped)
-            {
-                isFirstSpawnSkipped = true;
-                nextSpawnZ += platformLength;  // Skip the first platform space
-                continue;
-            }
-
-            SpawnPlatform();
-        }
-
-        Debug.Log("PlatformSpawner reset completed.");
+        GameObject platform = activePlatforms.Dequeue();
+        Destroy(platform);
     }
+
+    foreach (GameObject coin in activeCoins)
+    {
+        if (coin != null)
+        {
+            Destroy(coin);
+        }
+    }
+    activeCoins.Clear();
+
+    // Reset spawn position and state
+    nextSpawnZ = 0f;
+    isFirstSpawnSkipped = false;  // Reset the first spawn skip state
+
+    // Reset player's score and multiplier
+    GameObject player = GameObject.FindGameObjectWithTag("Player");
+    if (player != null)
+    {
+        PlayerMovement playerMovement = player.GetComponent<PlayerMovement>();
+        if (playerMovement != null)
+        {
+                    playerMovement.SetScore(0); // Reset score
+                playerMovement.SetMultiplier(1f); // Reset multiplier
+            Debug.Log("Player's score and multiplier have been reset.");
+        }
+        else
+        {
+            Debug.LogError("PlayerMovement script not found on the Player object.");
+        }
+    }
+    else
+    {
+        Debug.LogError("Player object not found! Make sure it is tagged as 'Player'.");
+    }
+
+    // Spawn initial platforms again
+    for (int i = 0; i < initialPlatformCount; i++)
+    {
+        if (!isFirstSpawnSkipped)
+        {
+            isFirstSpawnSkipped = true;
+            nextSpawnZ += platformLength;  // Skip the first platform space
+            continue;
+        }
+
+        SpawnPlatform();
+    }
+
+    Debug.Log("PlatformSpawner reset completed.");
+}
+
 }
