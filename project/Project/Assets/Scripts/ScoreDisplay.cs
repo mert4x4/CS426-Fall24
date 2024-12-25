@@ -59,7 +59,7 @@ public class ScoreDisplay : MonoBehaviour
             }
 
             // Debug the retrieved values
-            Debug.Log($"[ScoreDisplay] Score: {score}, Multiplier: {multiplier:F2}, High Score: {highScore}");
+            //Debug.Log($"[ScoreDisplay] Score: {score}, Multiplier: {multiplier:F2}, High Score: {highScore}");
 
             // Update the text
             scoreAndMultiplierText.text = $"Score: {score}\nMultiplier: {multiplier:F2}\nHigh Score: {highScore}";

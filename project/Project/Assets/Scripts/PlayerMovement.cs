@@ -29,6 +29,10 @@ public class PlayerMovement : MonoBehaviour
     private int score = 0;       // Player's current score
     private float scoreMultiplier = 1f;  // Score multiplier
     
+    
+    private bool canDash = true; // Indicates if the player can dash in the air
+
+    
     public int GetScore()
 {
     return score;
@@ -95,10 +99,11 @@ public void SetMultiplier(float newMultiplier)
             Jump();
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && !isDashing)
-        {
-            StartCoroutine(Dash());
-        }
+if (Input.GetKeyDown(KeyCode.LeftShift) && !isDashing && !isGrounded && canDash)
+{
+    StartCoroutine(Dash());
+}
+
     }
 
     void Move()
@@ -121,19 +126,21 @@ public void SetMultiplier(float newMultiplier)
         Debug.Log($"Jumped! Current jump count: {jumpCount}/{currentMaxJumps}");
     }
 
-    private void OnCollisionEnter(Collision collision)
+private void OnCollisionEnter(Collision collision)
+{
+    if (collision.gameObject.CompareTag("Ground"))
     {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isGrounded = true;
-            jumpCount = 0;
-            currentMaxJumps = maxJumps;
-            isSliding = false;  // Stop sliding when grounded
-            Debug.Log($"Landed on ground. Jump count reset. Current max jumps: {currentMaxJumps}");
-        }
-
-        HandleSideCollision(collision);
+        isGrounded = true;
+        jumpCount = 0;
+        currentMaxJumps = maxJumps;
+        isSliding = false;  // Stop sliding when grounded
+        canDash = true;     // Reset dash ability upon landing
+        Debug.Log($"Landed on ground. Jump count reset. Dash reset.");
     }
+
+    HandleSideCollision(collision);
+}
+
 
     private void OnCollisionStay(Collision collision)
     {
@@ -143,14 +150,15 @@ public void SetMultiplier(float newMultiplier)
         }
     }
 
-    private void OnCollisionExit(Collision collision)
+private void OnCollisionExit(Collision collision)
+{
+    if (collision.gameObject.CompareTag("Ground"))
     {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isSliding = false;  // Stop sliding when no longer colliding
-            Debug.Log("Stopped sliding due to exiting collision.");
-        }
+        isGrounded = false;
+        Debug.Log("Left platform, dash available.");
     }
+}
+
 
     private void HandleSideCollision(Collision collision)
     {
@@ -193,7 +201,7 @@ public void SetMultiplier(float newMultiplier)
     private void CollectCoinWithDashParticles(Vector3 coinPosition)
     {
         currentMaxJumps++;
-        scoreMultiplier *= 1.25f;  // Increase multiplier
+        scoreMultiplier += 1f;  // Increase multiplier
         AddScore(1);  // Add base score
 
         Debug.Log($"Coin collected while dashing! Extra jump granted. Current max jumps: {currentMaxJumps}, Score: {score}, Multiplier: {scoreMultiplier:F2}");
@@ -249,45 +257,47 @@ public void SetMultiplier(float newMultiplier)
         Debug.Log("Jump count reset.");
     }
 
-    private IEnumerator Dash()
+private IEnumerator Dash()
+{
+    isDashing = true;
+    canDash = false; // Player has used their dash
+
+    // Change color to indicate dashing
+    if (playerRenderer != null)
     {
-        isDashing = true;
-
-        // Change color to indicate dashing
-        if (playerRenderer != null)
-        {
-            playerRenderer.material.color = Color.red;
-        }
-
-        Vector3 dashDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")).normalized;
-
-        if (dashDirection == Vector3.zero)
-        {
-            dashDirection = transform.forward;
-        }
-
-        float originalDrag = rb.drag;
-        rb.drag = 0;
-
-        rb.velocity = dashDirection * dashSpeed;
-
-        Debug.Log($"Dashing in direction: {dashDirection}");
-
-        yield return new WaitForSeconds(dashDuration);
-
-        rb.drag = originalDrag;
-        rb.velocity = Vector3.zero;
-
-        // Extending the animation
-        yield return new WaitForSeconds(0.3f);
-
-        // Reset color after dash
-        if (playerRenderer != null)
-        {
-            playerRenderer.material.color = originalColor;
-        }
-
-        isDashing = false;
-        Debug.Log("Dash ended.");
+        playerRenderer.material.color = Color.red;
     }
+
+    Vector3 dashDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")).normalized;
+
+    if (dashDirection == Vector3.zero)
+    {
+        dashDirection = transform.forward;
+    }
+
+    float originalDrag = rb.drag;
+    rb.drag = 0;
+
+    rb.velocity = dashDirection * dashSpeed;
+
+    Debug.Log($"Dashing in direction: {dashDirection}");
+
+    yield return new WaitForSeconds(dashDuration);
+
+    rb.drag = originalDrag;
+    rb.velocity = Vector3.zero;
+
+    // Extending the animation
+    yield return new WaitForSeconds(0.3f);
+
+    // Reset color after dash
+    if (playerRenderer != null)
+    {
+        playerRenderer.material.color = originalColor;
+    }
+
+    isDashing = false;
+    Debug.Log("Dash ended.");
+}
+
 }
