@@ -17,6 +17,8 @@ ScriptsOnlyBuild:
     - TMPro.TMP_SpriteAsset
     - TMPro.TMP_StyleSheet
     - TMPro.TextMeshProUGUI
+    Unity.Timeline.Editor.dll:
+    - TimelineProjectSettings
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
     - UnityEditor.TestTools.TestRunner.TestListCacheData
@@ -100,27 +102,27 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 1546}
+      Script: {instanceID: 1548}
     - Class: 114
-      Script: {instanceID: 2278}
+      Script: {instanceID: 2280}
     - Class: 114
-      Script: {instanceID: 2778}
+      Script: {instanceID: 2780}
     - Class: 114
-      Script: {instanceID: 2782}
+      Script: {instanceID: 2784}
     - Class: 114
-      Script: {instanceID: 3342}
+      Script: {instanceID: 3344}
     - Class: 114
-      Script: {instanceID: 4134}
+      Script: {instanceID: 4136}
     - Class: 114
-      Script: {instanceID: 4286}
+      Script: {instanceID: 4288}
     - Class: 114
-      Script: {instanceID: 4976}
+      Script: {instanceID: 4978}
     - Class: 114
-      Script: {instanceID: 5656}
+      Script: {instanceID: 5658}
     - Class: 114
-      Script: {instanceID: 5954}
+      Script: {instanceID: 5956}
     - Class: 114
-      Script: {instanceID: 6490}
+      Script: {instanceID: 6492}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -159,29 +161,29 @@ ScriptsOnlyBuild:
     - Class: 104
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 1546}
+      Script: {instanceID: 1548}
     - Class: 114
-      Script: {instanceID: 1588}
+      Script: {instanceID: 1590}
     - Class: 114
-      Script: {instanceID: 2160}
+      Script: {instanceID: 2162}
     - Class: 114
-      Script: {instanceID: 2576}
+      Script: {instanceID: 2578}
     - Class: 114
-      Script: {instanceID: 2778}
+      Script: {instanceID: 2780}
     - Class: 114
-      Script: {instanceID: 3068}
+      Script: {instanceID: 3070}
     - Class: 114
-      Script: {instanceID: 4042}
+      Script: {instanceID: 4044}
     - Class: 114
-      Script: {instanceID: 4296}
+      Script: {instanceID: 4298}
     - Class: 114
-      Script: {instanceID: 4862}
+      Script: {instanceID: 4864}
     - Class: 114
-      Script: {instanceID: 4976}
+      Script: {instanceID: 4978}
     - Class: 114
-      Script: {instanceID: 5656}
+      Script: {instanceID: 5658}
     - Class: 114
-      Script: {instanceID: 5970}
+      Script: {instanceID: 5972}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128

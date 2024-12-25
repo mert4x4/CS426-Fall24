@@ -162,21 +162,7 @@ private void OnCollisionExit(Collision collision)
 
     private void HandleSideCollision(Collision collision)
     {
-        foreach (ContactPoint contact in collision.contacts)
-        {
-            Vector3 normal = contact.normal;
 
-            // Check for side collisions (horizontal collision normal)
-            if (Mathf.Abs(normal.x) > 0.5f || Mathf.Abs(normal.z) > 0.5f)
-            {
-                Debug.Log("Side collision detected. Applying sliding effect.");
-                isSliding = true;
-
-                // Apply downward velocity
-                rb.velocity = new Vector3(0, -slideSpeed, 0);
-                break;
-            }
-        }
     }
 
     private void OnTriggerEnter(Collider other)
