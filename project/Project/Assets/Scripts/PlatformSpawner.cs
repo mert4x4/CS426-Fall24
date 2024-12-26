@@ -19,7 +19,14 @@ public class PlatformSpawner : MonoBehaviour
     private float nextSpawnZ = 0f;
     private Vector3[] spawnPatterns = {
         new Vector3(-6f, 0f, 0f), new Vector3(0f, 0f, 0f), new Vector3(4f, 0f, 0f),
-        new Vector3(-5f, 1f, 0f), new Vector3(6f, 1f, 0f), new Vector3(0f, 2f, 0f)
+        new Vector3(-5f, 1f, 0f), new Vector3(6f, 1f, 0f), new Vector3(0f, 2f, 0f),
+            // Medium distance
+    new Vector3(-8f, 0f, 2f), new Vector3(2f, 1f, 2f), new Vector3(7f, 2f, 2f),
+    new Vector3(-3f, 2f, 3f), new Vector3(5f, 0f, 3f), new Vector3(-7f, 1f, 3f),
+    
+       new Vector3(-9f, 0f, 3f), new Vector3(9f, 1f, 3f), new Vector3(0f, 3f, 3f),
+    new Vector3(-9f, 2f, 3f), new Vector3(9f, 2f, 3f), new Vector3(8f, 0f, 3f)
+
     };
     private bool isFirstSpawnSkipped = false;
 

@@ -1072,7 +1072,7 @@ GameObject:
   - component: {fileID: 2006670216}
   - component: {fileID: 2006670215}
   m_Layer: 5
-  m_Name: TopScoreText (1)
+  m_Name: GameInfoText
   m_TagString: TopScore
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

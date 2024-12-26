@@ -184,26 +184,27 @@ private void OnCollisionExit(Collision collision)
         }
     }
 
-    private void CollectCoinWithDashParticles(Vector3 coinPosition)
+private void CollectCoinWithDashParticles(Vector3 coinPosition)
+{
+    AddScore(1);  // Add base score first
+    scoreMultiplier += 1f;  // Increase multiplier
+    currentMaxJumps++;
+
+    Debug.Log($"Coin collected while dashing! Extra jump granted. Current max jumps: {currentMaxJumps}, Score: {score}, Multiplier: {scoreMultiplier:F2}");
+
+    // Play the dash particle effect
+    if (coinCollectionParticles != null)
     {
-        currentMaxJumps++;
-        scoreMultiplier += 1f;  // Increase multiplier
-        AddScore(1);  // Add base score
-
-        Debug.Log($"Coin collected while dashing! Extra jump granted. Current max jumps: {currentMaxJumps}, Score: {score}, Multiplier: {scoreMultiplier:F2}");
-
-        // Play the dash particle effect
-        if (coinCollectionParticles != null)
-        {
-            coinCollectionParticles.transform.position = coinPosition;
-            coinCollectionParticles.Play();
-            Debug.Log("Dash coin collection particles activated.");
-        }
-        else
-        {
-            Debug.LogWarning("Dash coin collection particle system is not assigned.");
-        }
+        coinCollectionParticles.transform.position = coinPosition;
+        coinCollectionParticles.Play();
+        Debug.Log("Dash coin collection particles activated.");
     }
+    else
+    {
+        Debug.LogWarning("Dash coin collection particle system is not assigned.");
+    }
+}
+
 
     private void CollectCoinWithNormalParticles(Vector3 coinPosition)
     {
