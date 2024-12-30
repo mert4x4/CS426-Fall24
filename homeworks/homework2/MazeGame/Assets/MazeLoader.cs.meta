@@ -11,6 +11,7 @@ MonoImporter:
   - doorPrefab: {fileID: 2605539698066723635, guid: 212c9dcde3f95441a8f6bd97798a8fe5, type: 3}
   - trapPrefab: {fileID: 3072709814478864571, guid: 1672f15021c2e4aa28c639b825754d9a, type: 3}
   - guardPrefab: {fileID: 6239556801348941766, guid: a403dd6779fec4e9e83b2505bc1e9fde, type: 3}
+  - finishPrefab: {fileID: 3072709814478864571, guid: 8ebda13acc33b4f94a81a2b1af715808, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

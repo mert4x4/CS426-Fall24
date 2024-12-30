@@ -347,6 +347,7 @@
 "Assets/GameManager.cs"
 "Assets/Guard.cs"
 "Assets/MazeLoader.cs"
+"Assets/MusicManager.cs"
 "Assets/PlayerMovement.cs"
 "Assets/TrapPlatform.cs"
 -langversion:9.0

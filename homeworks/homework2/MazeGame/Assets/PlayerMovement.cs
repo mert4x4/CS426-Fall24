@@ -6,7 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 3f; // Player movement speed
     public Transform cameraTransform; // Reference to the camera for rotation and follow
-    public float cameraDistance = 2f; // Distance of the camera from the player
+    public float cameraDistance = 5f; // Distance of the camera from the player
     public float cameraHeight = 1.8f; // Height of the camera above the player
     public float cameraRotationSpeed = 5f; // Speed of camera rotation with mouse
     public float cameraPitchLimit = 45f; // Limit for camera pitch (up/down rotation)
@@ -220,21 +220,32 @@ public void Start()
         carriedKey = null;
     }
 
-    public void OnCollisionEnter(Collision collision)
+public void OnCollisionEnter(Collision collision)
+{
+    // Handle collision with "Door"
+    if (collision.gameObject.CompareTag("Door") && HasKey())
     {
-        if (collision.gameObject.CompareTag("Door") && HasKey())
+        Door door = collision.gameObject.GetComponent<Door>();
+        if (door != null)
         {
-            Door door = collision.gameObject.GetComponent<Door>();
-            if (door != null)
-            {
-                door.OpenDoor();
-                Destroy(carriedKey);
-                carriedKey = null;
-                Debug.Log($"Collided with {collision.gameObject.name}, Key used and destroyed.");
-            }
+            door.OpenDoor();
+            Destroy(carriedKey);
+            carriedKey = null;
+            Debug.Log($"Collided with {collision.gameObject.name}, Key used and destroyed.");
         }
-
     }
+    // Handle collision with "Finish"
+    else if (collision.gameObject.CompareTag("Finish"))
+    {
+        Debug.Log("You won the game!");
+               if (gameManager != null)
+        {
+            gameManager.ResetGame(); // Call the GameManager's reset method
+        }
+        // You can add additional functionality here (e.g., trigger victory screen or restart the game)
+    }
+}
+
 
     public bool HasKey()
     {
