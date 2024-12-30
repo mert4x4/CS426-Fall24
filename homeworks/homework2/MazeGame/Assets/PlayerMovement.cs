@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     public float carryOffset = 1.0f; // Offset above the player for carrying the key
 
     public Rigidbody rb; // Player's Rigidbody
-    public float currentYaw = 0f; // Current yaw rotation of the camera
+    public float currentYaw = 0.3f; // Current yaw rotation of the camera
     public float pitch = 0f; // Vertical rotation angle (pitch) of the camera
     public GameObject carriedKey = null; // The key object the player is carrying
 
@@ -55,6 +55,7 @@ public void Start()
     }
 
     Debug.Log("PlayerMovement initialized successfully.");
+
 }
 
 

@@ -28,6 +28,7 @@ public class EndGameMenu : MonoBehaviour
         {
             Debug.LogError("StartText object not found in the scene!");
         }
+
     }
 
     // Called when Restart button is clicked
@@ -38,6 +39,8 @@ public class EndGameMenu : MonoBehaviour
 
         // Load the SampleScene
         SceneManager.LoadScene("SampleScene");
+                Cursor.lockState = CursorLockMode.Locked; // Locks the cursor to the center of the screen
+        Cursor.visible = false; // Hides the cursor
     }
 
     // Called when Quit button is clicked

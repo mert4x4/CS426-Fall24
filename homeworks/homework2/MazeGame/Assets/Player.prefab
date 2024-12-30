@@ -129,8 +129,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 3
   cameraTransform: {fileID: 2820042939378353488, guid: a0bf93146b3c144628668cba380077a4, type: 3}
-  cameraDistance: 3
-  cameraHeight: 2.2
+  cameraDistance: 4
+  cameraHeight: 2.7
   cameraRotationSpeed: 5
   cameraPitchLimit: 45
   carryOffset: 1

@@ -76,6 +76,10 @@ public class GameManager : MonoBehaviour
 
         Debug.Log("Game reset complete.");
         SceneManager.LoadScene("menu_scene");
+        
+        Cursor.lockState = CursorLockMode.None; // Unlocks the cursor
+Cursor.visible = true; // Makes the cursor visible
+
 
     }
 }
