@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 1d91668ec193047049a58ce3f37ac238
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - mazeLoader: {instanceID: 0}
+  - playerMovement: {fileID: -7536700049060719877, guid: b9dc4725837684e6da372b15359afbcf, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

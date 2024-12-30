@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 2e8db42e508bc4776ad09d90667801fe
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - playerPrefab: {fileID: 4433799002470856783, guid: b9dc4725837684e6da372b15359afbcf, type: 3}
+  - wallPrefab: {fileID: 2940758177605865857, guid: 7240ab3f749ad4504989a1744703406a, type: 3}
+  - floorPrefab: {fileID: 3072709814478864571, guid: 7b0e649c5287343ea85359b58838bacc, type: 3}
+  - keyPrefab: {fileID: 7082999962846129588, guid: b8be795c76f3d49a996c6157e6e26e98, type: 3}
+  - doorPrefab: {fileID: 2605539698066723635, guid: 212c9dcde3f95441a8f6bd97798a8fe5, type: 3}
+  - trapPrefab: {fileID: 3072709814478864571, guid: 1672f15021c2e4aa28c639b825754d9a, type: 3}
+  - guardPrefab: {fileID: 6239556801348941766, guid: a403dd6779fec4e9e83b2505bc1e9fde, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
